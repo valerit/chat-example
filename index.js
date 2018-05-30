@@ -1,9 +1,14 @@
 var app = require('express')();
 var http = require('http').Server(app);
+
+var server = require('express')();
+var serverHttp = require('http').Server(server);
+
 var io = require('socket.io')(http);
 var port = process.env.PORT || 3000;
+var serverPort = 3001;
 
-app.get('/', function(req, res){
+server.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
@@ -16,3 +21,7 @@ io.on('connection', function(socket){
 http.listen(port, function(){
   console.log('listening on *:' + port);
 });
+
+serverHttp.listen(serverPort, () => {
+	console.info('Listening...')
+})
